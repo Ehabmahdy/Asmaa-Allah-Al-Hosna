@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معجم أسماء الله الحسنى — أثر</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6EF;
+    --cream2: #F2EBD9;
+    --gold: #C49A3C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --ink: #2C2416;
+    --ink2: #5A4E3A;
+    --ink3: #8C7D65;
+    --border: rgba(196,154,60,0.25);
+    --border-strong: rgba(196,154,60,0.5);
+    --white: #FFFDF8;
+    --shadow: rgba(44,36,22,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--ink);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+  }
+  .logo span { color: #fff; font-size: 1rem; margin-right: 12px; opacity: 0.6; font-family: 'Cairo', sans-serif; font-weight: 300; }
+  .back-btn {
+    color: var(--gold-light);
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 1px solid rgba(232,201,122,0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: rgba(232,201,122,0.1); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--ink);
+    padding: 3rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(196,154,60,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    color: var(--gold-light);
+    display: block;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .hadith-box {
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    background: rgba(196,154,60,0.08);
+    border: 1px solid rgba(196,154,60,0.25);
+    border-radius: 12px;
+    padding: 1.2rem 1.8rem;
+  }
+  .hadith-text {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+  }
+  .hadith-source {
+    font-size: 0.78rem;
+    color: var(--gold);
+    margin-top: 6px;
+    display: block;
+  }
+  /* stats */
+  .stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--gold-light); display: block; }
+  .stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 300; }
+
+  /* ─── TOOLBAR ─── */
+  .toolbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px 10px 40px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--gold); }
+  .search-wrap input::placeholder { color: var(--ink3); }
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink3);
+    font-size: 14px;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.8rem;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: white; font-weight: 600; }
+  .count-badge {
+    background: var(--cream2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    color: var(--ink3);
+    white-space: nowrap;
+  }
+  #count-num { color: var(--gold-dark); font-weight: 700; }
+
+  /* ─── GRID ─── */
+  .main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px var(--shadow);
+    transform: translateY(-2px);
+  }
+  .card.expanded { border-color: var(--gold); }
+  .card-num {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    font-weight: 300;
+  }
+  .card-top {
+    padding: 1.5rem 1.2rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .card.expanded .card-top { border-color: var(--border); }
+  .name-ar {
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold-dark);
+    display: block;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .name-en {
+    font-size: 0.75rem;
+    color: var(--ink3);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .meaning {
+    font-size: 0.88rem;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+  .theme-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .theme-rahma  { background: #FFF3E0; color: #8B4513; }
+  .theme-jalal  { background: #F3E5F5; color: #6A0080; }
+  .theme-jamal  { background: #E8F5E9; color: #1B5E20; }
+  .theme-fadl   { background: #E3F2FD; color: #0D47A1; }
+  .theme-ilm    { background: #E8EAF6; color: #1A237E; }
+  .theme-quwa   { background: #FCE4EC; color: #880E4F; }
+
+  /* ─── EXPANDED CONTENT ─── */
+  .card-detail {
+    padding: 0 1.2rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+  }
+  .card.expanded .card-detail {
+    max-height: 600px;
+    padding: 1rem 1.2rem 1.2rem;
+  }
+  .detail-section {
+    margin-bottom: 1rem;
+  }
+  .detail-section:last-child { margin-bottom: 0; }
+  .detail-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .detail-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .detail-text {
+    font-family: 'Amiri', serif;
+    font-size: 0.98rem;
+    color: var(--ink);
+    line-height: 1.9;
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border-right: 3px solid var(--gold);
+  }
+  .detail-text.dua {
+    border-right-color: #1B5E20;
+    background: #F1F8F1;
+    color: #1B3A1F;
+  }
+  .ref {
+    font-size: 0.72rem;
+    color: var(--ink3);
+    margin-top: 4px;
+    display: block;
+    text-align: left;
+    direction: ltr;
+  }
+  .toggle-icon {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cream2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--ink3);
+    transition: transform 0.3s, background 0.2s;
+  }
+  .card.expanded .toggle-icon { transform: translateX(-50%) rotate(180deg); background: var(--gold-light); }
+
+  /* ─── NO RESULTS ─── */
+  .empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ink3);
+    grid-column: 1/-1;
+  }
+  .empty-ar { font-family: 'Amiri', serif; font-size: 1.8rem; color: var(--border-strong); display: block; margin-bottom: 8px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--ink3);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  .footer-logo { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 4px; display: block; }
+
+  @media (max-width: 600px) {
+    header { padding: 0 1rem; }
+    .hero { padding: 2rem 1rem 2.5rem; }
+    .toolbar { padding: 0.8rem 1rem; }
+    .main { padding: 1rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">أثر <span>/ المكتبة الإسلامية الرقمية</span></div>
+  <div class="back-btn">← العودة للمكتبة</div>
+</header>
+
+<div class="hero">
+  <span class="hero-arabic">معجم أسماء الله الحسنى</span>
+  <p class="hero-sub">المعنى · الدليل · الدعاء المرتبط</p>
+  <div class="hadith-box">
+    <p class="hadith-text">«إِنَّ لِلَّهِ تِسْعَةً وَتِسْعِينَ اسْمًا، مِئَةً إِلَّا وَاحِدًا، مَنْ أَحْصَاهَا دَخَلَ الجَنَّةَ»</p>
+    <span class="hadith-source">صحيح البخاري · كتاب التوحيد</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="stat-num">99</span><span class="stat-lbl">اسمًا مباركًا</span></div>
+    <div class="stat"><span class="stat-num">6</span><span class="stat-lbl">محاور ثيماتية</span></div>
+    <div class="stat"><span class="stat-num">99</span><span class="stat-lbl">دعاءً مأثورًا</span></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="ابحث باسم أو معنى..." oninput="filterCards()">
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('all', this)">الكل</button>
+    <button class="filter-btn" onclick="setFilter('rahma', this)">🌿 الرحمة والعطاء</button>
+    <button class="filter-btn" onclick="setFilter('jalal', this)">⚡ الجلال والعظمة</button>
+    <button class="filter-btn" onclick="setFilter('jamal', this)">✨ الجمال والكمال</button>
+    <button class="filter-btn" onclick="setFilter('ilm', this)">📖 العلم والحكمة</button>
+    <button class="filter-btn" onclick="setFilter('fadl', this)">💛 الفضل والكرم</button>
+    <button class="filter-btn" onclick="setFilter('quwa', this)">🔥 القوة والقدرة</button>
+  </div>
+  <div class="count-badge">يُعرض <span id="count-num">99</span> اسمًا</div>
+</div>
+
+<main class="main">
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <span class="footer-logo">أثر</span>
+  المكتبة الإسلامية الرقمية · جميع البيانات من المصادر الشرعية الموثّقة
+</footer>
+
+<script>
+const names = [
+  { num:1, ar:"الله", en:"Allah", meaning:"الاسم الجامع لجميع صفات الكمال والجلال، المألوه المعبود حقًا", theme:"jalal",
+    daleel:"قوله تعالى: ﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ﴾", ref:"الحشر: 22",
+    dua:"اللَّهُمَّ أَنْتَ اللهُ لا إِلَهَ إِلَّا أَنْتَ، أَنْتَ الغَنِيُّ وَنَحْنُ الفُقَرَاءُ" },
+  { num:2, ar:"الرَّحْمَن", en:"Ar-Rahman", meaning:"ذو الرحمة الواسعة الشاملة لجميع الخلق في الدنيا والآخرة", theme:"rahma",
+    daleel:"﴿قُلِ ادْعُوا اللَّهَ أَوِ ادْعُوا الرَّحْمَٰنَ﴾", ref:"الإسراء: 110",
+    dua:"يا رَحْمَنُ ارْحَمْنِي بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيء" },
+  { num:3, ar:"الرَّحِيم", en:"Ar-Raheem", meaning:"دائم الرحمة بعباده المؤمنين، وهي أخص وأعمق من الرحمن", theme:"rahma",
+    daleel:"﴿وَكَانَ بِالْمُؤْمِنِينَ رَحِيمًا﴾", ref:"الأحزاب: 43",
+    dua:"يا رَحِيمُ ارْحَمْنِي وَتُبْ عَلَيَّ إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيم" },
+  { num:4, ar:"المَلِك", en:"Al-Malik", meaning:"المالك لجميع الوجود، الملك الحقيقي الذي لا شريك له في ملكه", theme:"jalal",
+    daleel:"﴿فَتَعَالَى اللَّهُ الْمَلِكُ الْحَقُّ﴾", ref:"طه: 114",
+    dua:"يا مَلِكُ اجْعَلْنِي مِنْ عِبَادِكَ الصَّالِحِينَ" },
+  { num:5, ar:"القُدُّوس", en:"Al-Quddous", meaning:"المنزّه عن كل عيب ونقص وسوء، البالغ الطهارة المطلقة", theme:"jalal",
+    daleel:"﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ﴾", ref:"الحشر: 23",
+    dua:"سُبُّوحٌ قُدُّوسٌ رَبُّ المَلَائِكَةِ وَالرُّوحِ" },
+  { num:6, ar:"السَّلَام", en:"As-Salam", meaning:"الذي سَلِمَ من كل نقص وآفة، وهو مصدر السلام لعباده", theme:"jamal",
+    daleel:"﴿وَاللَّهُ يَدْعُو إِلَىٰ دَارِ السَّلَامِ﴾", ref:"يونس: 25",
+    dua:"اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الجَلَالِ وَالإِكْرَام" },
+  { num:7, ar:"المُؤْمِن", en:"Al-Mu'min", meaning:"الذي يمنح الأمان لعباده، ويصدّق رسله، ويُؤمِّن من عذابه المؤمنين", theme:"rahma",
+    daleel:"﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ... الْمُؤْمِنُ﴾", ref:"الحشر: 23",
+    dua:"يا مُؤمِنُ آمِنَّا وَأَهْلَنَا مِنَ الفِتَنِ مَا ظَهَرَ مِنْهَا وَمَا بَطَن" },
+  { num:8, ar:"المُهَيْمِن", en:"Al-Muhaymin", meaning:"المراقب المطّلع على كل شيء، الحافظ لكل شيء بعلمه", theme:"ilm",
+    daleel:"﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ... الْمُهَيْمِنُ﴾", ref:"الحشر: 23",
+    dua:"يا مُهَيْمِنُ احْفَظْنِي بِحِفْظِكَ مِنْ شَرِّ كُلِّ ذِي شَر" },
+  { num:9, ar:"العَزِيز", en:"Al-Azeez", meaning:"الغالب الذي لا يُغلَب، القوي الذي لا يُقهَر", theme:"quwa",
+    daleel:"﴿وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾", ref:"إبراهيم: 4",
+    dua:"يا عَزِيزُ أَعِزَّنِي بِعِزَّتِكَ وَلَا تُذِلَّنِي بِمَعْصِيَتِك" },
+  { num:10, ar:"الجَبَّار", en:"Al-Jabbar", meaning:"الذي يجبر الكسير ويُصلح المنكسر، وهو القاهر فوق عباده", theme:"jalal",
+    daleel:"﴿الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ﴾", ref:"الحشر: 23",
+    dua:"يا جَبَّارُ اجْبُرْ كَسْرِي وَأَصْلِحْ أَمْرِي" },
+  { num:11, ar:"المُتَكَبِّر", en:"Al-Mutakabbir", meaning:"المتعظّم بصفات الكمال، الذي له الكبرياء وحده في السماوات والأرض", theme:"jalal",
+    daleel:"﴿سُبْحَانَهُ وَتَعَالَىٰ عَمَّا يُشْرِكُونَ﴾", ref:"الحشر: 23",
+    dua:"اللَّهُمَّ لَكَ الكِبْرِيَاءُ فَأَذِلَّنِي لِطَاعَتِك" },
+  { num:12, ar:"الخَالِق", en:"Al-Khaaliq", meaning:"المُوجِد للأشياء من العدم، المُقدِّر لها على ما يشاء", theme:"quwa",
+    daleel:"﴿اللَّهُ خَالِقُ كُلِّ شَيْءٍ﴾", ref:"الزمر: 62",
+    dua:"يا خَالِقُ خُلْقَنِي خَلْقًا حَسَنًا وَاجْعَلْ خُلُقِي حَسَنًا" },
+  { num:13, ar:"البَارِئ", en:"Al-Baari'", meaning:"الذي فصل الخلق بعضهم عن بعض وميّز كلَّ شكل عن غيره", theme:"jamal",
+    daleel:"﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ﴾", ref:"الحشر: 24",
+    dua:"يا بَارِئُ بَرِّئْنِي مِمَّا يُبْعِدُنِي عَنْك" },
+  { num:14, ar:"المُصَوِّر", en:"Al-Musawwir", meaning:"الذي صوّر جميع الموجودات وأعطاها صورها وهيئاتها", theme:"jamal",
+    daleel:"﴿يُصَوِّرُكُمْ فِي الْأَرْحَامِ كَيْفَ يَشَاءُ﴾", ref:"آل عمران: 6",
+    dua:"يا مُصَوِّرُ صَوِّرْ قَلْبِي بِصُورَةِ حُبِّكَ وَذِكْرِك" },
+  { num:15, ar:"الغَفَّار", en:"Al-Ghaffar", meaning:"كثير المغفرة لذنوب عباده، يغفر مرة بعد مرة مهما عظمت الذنوب", theme:"rahma",
+    daleel:"﴿إِنَّهُ كَانَ غَفَّارًا﴾", ref:"نوح: 10",
+    dua:"اللَّهُمَّ إِنَّكَ عَفُوٌّ غَفَّارٌ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي" },
+  { num:16, ar:"القَهَّار", en:"Al-Qahhaar", meaning:"الغالب على كل شيء، الذي قهر كل مخلوق وخضعت له الرقاب", theme:"quwa",
+    daleel:"﴿وَهُوَ الْقَاهِرُ فَوْقَ عِبَادِهِ﴾", ref:"الأنعام: 18",
+    dua:"يا قَهَّارُ اقْهَرْ شَيَاطِينَ نَفْسِي وَهَوَايَ" },
+  { num:17, ar:"الوَهَّاب", en:"Al-Wahhab", meaning:"الكثير الهبات والعطايا بلا مقابل ولا انتظار جزاء", theme:"fadl",
+    daleel:"﴿رَبَّنَا لَا تُزِغْ قُلُوبَنَا ... وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً إِنَّكَ أَنتَ الْوَهَّابُ﴾", ref:"آل عمران: 8",
+    dua:"رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً إِنَّكَ سَمِيعُ الدُّعَاء" },
+  { num:18, ar:"الرَّزَّاق", en:"Ar-Razzaq", meaning:"الذي يرزق جميع الخلق ويُوسِّع لهم أرزاقهم ويكفل معاشهم", theme:"fadl",
+    daleel:"﴿إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ﴾", ref:"الذاريات: 58",
+    dua:"اللَّهُمَّ ارْزُقْنِي رِزْقًا حَلَالًا طَيِّبًا وَبَارِكْ لِي فِيه" },
+  { num:19, ar:"الفَتَّاح", en:"Al-Fattah", meaning:"الذي يفتح أبواب الرزق والرحمة والنصر لعباده", theme:"fadl",
+    daleel:"﴿قُلْ يَجْمَعُ بَيْنَنَا رَبُّنَا ثُمَّ يَفْتَحُ بَيْنَنَا بِالْحَقِّ﴾", ref:"سبأ: 26",
+    dua:"يا فَتَّاحُ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ وَارْزُقْنِي الفَرَجَ مِمَّا أَنَا فِيه" },
+  { num:20, ar:"العَلِيم", en:"Al-'Aleem", meaning:"المحيط علمه بكل شيء، لا يخفى عليه شيء في الأرض ولا في السماء", theme:"ilm",
+    daleel:"﴿وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ﴾", ref:"البقرة: 282",
+    dua:"اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَأَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَع" },
+  { num:21, ar:"القَابِض", en:"Al-Qaabid", meaning:"الذي يقبض الأرواح ويضيّق الرزق على من يشاء بحكمة", theme:"jalal",
+    daleel:"﴿وَاللَّهُ يَقْبِضُ وَيَبْسُطُ﴾", ref:"البقرة: 245",
+    dua:"يا قَابِضُ اقْبِضْ نَفْسِي عَلَى الإِيمَانِ وَالعَمَلِ الصَّالِح" },
+  { num:22, ar:"البَاسِط", en:"Al-Baasit", meaning:"الذي يبسط الرزق ويوسّعه لمن يشاء ويشرح الصدور بنوره", theme:"rahma",
+    daleel:"﴿وَاللَّهُ يَقْبِضُ وَيَبْسُطُ وَإِلَيْهِ تُرْجَعُونَ﴾", ref:"البقرة: 245",
+    dua:"يا بَاسِطُ ابْسُطْ عَلَيَّ مِنْ رِزْقِكَ الحَلَالِ وَبَارِكْ لِي فِيه" },
+  { num:23, ar:"الخَافِض", en:"Al-Khaafid", meaning:"الذي يخفض ويُذلّ الجبارين والطغاة وأعداء الدين", theme:"jalal",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"ابن ماجه",
+    dua:"يا خَافِضُ اخْفِضْ كُلَّ مُتَكَبِّرٍ عَلَيَّ وَذَلِّلْ لِي كُلَّ عَسِير" },
+  { num:24, ar:"الرَّافِع", en:"Ar-Raafi'", meaning:"الذي يرفع المؤمنين والأولياء ويُعلي شأنهم في الدنيا والآخرة", theme:"fadl",
+    daleel:"﴿يَرْفَعِ اللَّهُ الَّذِينَ آمَنُوا مِنكُمْ وَالَّذِينَ أُوتُوا الْعِلْمَ دَرَجَاتٍ﴾", ref:"المجادلة: 11",
+    dua:"يا رَافِعُ ارْفَعْ ذِكْرِي وَدَرَجَتِي عِنْدَكَ وَعِنْدَ عِبَادِك" },
+  { num:25, ar:"المُعِزّ", en:"Al-Mu'izz", meaning:"يُعزّ من يشاء من عباده ويمنحهم العزة والكرامة", theme:"fadl",
+    daleel:"﴿قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَن تَشَاءُ... وَتُعِزُّ مَن تَشَاءُ﴾", ref:"آل عمران: 26",
+    dua:"اللَّهُمَّ أَعِزَّنَا بِالإِسْلَامِ وَلَا تُذِلَّنَا بِسِوَاه" },
+  { num:26, ar:"المُذِلّ", en:"Al-Mudhil", meaning:"يُذِلّ من يشاء من الكافرين والظالمين جزاءً وفاقًا", theme:"jalal",
+    daleel:"﴿وَتُعِزُّ مَن تَشَاءُ وَتُذِلُّ مَن تَشَاءُ﴾", ref:"آل عمران: 26",
+    dua:"يا مُذِلُّ أَذِلَّ نَفْسِيَ الأَمَّارَةَ بِالسُّوءِ بَيْنَ يَدَيْكَ" },
+  { num:27, ar:"السَّمِيع", en:"As-Samee'", meaning:"الذي يسمع كل الأصوات دقيقها وجليلها، سرّها وعلنها", theme:"ilm",
+    daleel:"﴿وَهُوَ السَّمِيعُ الْعَلِيمُ﴾", ref:"البقرة: 137",
+    dua:"يا سَمِيعَ الدَّعَوَاتِ، اسْمَعْ دُعَائِي وَأَجِبْ نِدَائِي" },
+  { num:28, ar:"البَصِير", en:"Al-Baseer", meaning:"الذي يرى كل شيء ظاهره وباطنه، جليله ودقيقه", theme:"ilm",
+    daleel:"﴿وَكَانَ اللَّهُ سَمِيعًا بَصِيرًا﴾", ref:"النساء: 134",
+    dua:"يا بَصِيرُ انْظُرْ إِلَيَّ نَظْرَةَ رَحْمَةٍ تُغْنِينِي عَمَّن سِوَاك" },
+  { num:29, ar:"الحَكَم", en:"Al-Hakam", meaning:"الحاكم العدل الذي يقضي بين عباده بالحق والقسط", theme:"jalal",
+    daleel:"﴿أَفَغَيْرَ اللَّهِ أَبْتَغِي حَكَمًا﴾", ref:"الأنعام: 114",
+    dua:"يا حَكَمُ احْكُمْ بَيْنِي وَبَيْنَ مَن ظَلَمَنِي بِالحَقِّ" },
+  { num:30, ar:"العَدْل", en:"Al-'Adl", meaning:"البالغ العدل في قضائه وحكمه، لا يجور ولا يظلم أحدًا", theme:"jamal",
+    daleel:"﴿وَتَمَّتْ كَلِمَتُ رَبِّكَ صِدْقًا وَعَدْلًا﴾", ref:"الأنعام: 115",
+    dua:"يا عَدْلُ أَنْصِفْنِي مِمَّن ظَلَمَنِي وَكُنْ لِي لَا عَلَيَّ" },
+  { num:31, ar:"اللَّطِيف", en:"Al-Lateef", meaning:"الرفيق بعباده في تدبيره، يصل لطفه لكل شيء خفيّ ودقيق", theme:"rahma",
+    daleel:"﴿اللَّهُ لَطِيفٌ بِعِبَادِهِ يَرْزُقُ مَن يَشَاءُ﴾", ref:"الشورى: 19",
+    dua:"يا لَطِيفُ الطُفْ بِي فِي أَمْرِي كُلِّهِ وَيَسِّرْ لِي مَا عَسُر" },
+  { num:32, ar:"الخَبِير", en:"Al-Khabeer", meaning:"العارف بدقائق الأمور وخفاياها وما يكنّه الصدور", theme:"ilm",
+    daleel:"﴿وَهُوَ اللَّطِيفُ الْخَبِيرُ﴾", ref:"الأنعام: 103",
+    dua:"يا خَبِيرُ أَنْتَ أَعْلَمُ بِحَالِي فَأَصْلِحْ شَأْنِي كُلَّه" },
+  { num:33, ar:"الحَلِيم", en:"Al-Haleem", meaning:"الذي لا يستعجل بالعقوبة بل يُمهِل ويصبر على أذى الجاهلين", theme:"rahma",
+    daleel:"﴿وَاللَّهُ غَفُورٌ حَلِيمٌ﴾", ref:"البقرة: 235",
+    dua:"يا حَلِيمُ لَا تُؤَاخِذْنِي بِجَهْلِي وَتُبْ عَلَيَّ بِرَحْمَتِك" },
+  { num:34, ar:"العَظِيم", en:"Al-'Adheem", meaning:"الذي بلغت عظمته أقصاها في كل صفة من صفات الكمال", theme:"jalal",
+    daleel:"﴿وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾", ref:"البقرة: 255",
+    dua:"سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِه" },
+  { num:35, ar:"الغَفُور", en:"Al-Ghafoor", meaning:"الواسع المغفرة، يمحو الذنوب ويسترها مهما كبرت", theme:"rahma",
+    daleel:"﴿وَإِنِّي لَغَفَّارٌ لِّمَن تَابَ وَآمَنَ﴾", ref:"طه: 82",
+    dua:"اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ، دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ" },
+  { num:36, ar:"الشَّكُور", en:"Ash-Shakoor", meaning:"يشكر القليل من العمل ويُجازي عليه الثواب العظيم", theme:"fadl",
+    daleel:"﴿إِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ﴾", ref:"البقرة: 158",
+    dua:"اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِك" },
+  { num:37, ar:"العَلِيّ", en:"Al-'Alee", meaning:"المتعالي فوق جميع خلقه في ذاته وصفاته وقدره", theme:"jalal",
+    daleel:"﴿وَهُوَ الْعَلِيُّ الْكَبِيرُ﴾", ref:"سبأ: 23",
+    dua:"يا عَلِيُّ ارْفَعْنِي بِطَاعَتِكَ عَنِ الدُّنِيَّاتِ" },
+  { num:38, ar:"الكَبِير", en:"Al-Kabeer", meaning:"الكبير في ذاته وصفاته على الحقيقة المطلقة", theme:"jalal",
+    daleel:"﴿عَالِمُ الْغَيْبِ وَالشَّهَادَةِ الْكَبِيرُ الْمُتَعَالِ﴾", ref:"الرعد: 9",
+    dua:"اللَّهُ أَكْبَرُ كَبِيرًا وَالحَمْدُ للهِ كَثِيرًا وَسُبْحَانَ اللهِ بُكْرَةً وَأَصِيلًا" },
+  { num:39, ar:"الحَفِيظ", en:"Al-Hafeeth", meaning:"الذي يحفظ كل شيء، يحفظ أعمال العباد ويحفظهم من المهالك", theme:"ilm",
+    daleel:"﴿وَرَبُّكَ عَلَىٰ كُلِّ شَيْءٍ حَفِيظٌ﴾", ref:"سبأ: 21",
+    dua:"بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيءٌ وَهُوَ الحَفِيظُ العَلِيم" },
+  { num:40, ar:"المُقِيت", en:"Al-Muqeet", meaning:"الذي يُوصل القوت والغذاء لكل حي ويقدّر أرزاق العباد", theme:"fadl",
+    daleel:"﴿وَكَانَ اللَّهُ عَلَىٰ كُلِّ شَيْءٍ مُّقِيتًا﴾", ref:"النساء: 85",
+    dua:"يا مُقِيتُ أَقِتْنِي بِطَاعَتِكَ وَأَغْنِنِي عَنْ سِوَاك" },
+  { num:41, ar:"الحَسِيب", en:"Al-Haseeb", meaning:"الكافي لعباده، المحاسِب لهم على أعمالهم بالعدل التام", theme:"ilm",
+    daleel:"﴿وَكَانَ اللَّهُ عَلَىٰ كُلِّ شَيْءٍ حَسِيبًا﴾", ref:"الأحزاب: 39",
+    dua:"حَسْبِيَ اللهُ لا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ العَرْشِ العَظِيم" },
+  { num:42, ar:"الجَلِيل", en:"Al-Jaleel", meaning:"العظيم المتصف بصفات الجلال من القدرة والعزة والقهر", theme:"jalal",
+    daleel:"﴿وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ﴾", ref:"الرحمن: 27",
+    dua:"يا ذَا الجَلَالِ وَالإِكْرَامِ أَسْأَلُكَ رِضَاكَ وَالجَنَّة" },
+  { num:43, ar:"الكَرِيم", en:"Al-Kareem", meaning:"الجواد الذي يعطي العطايا الجزيلة بلا سبب ولا مقابل", theme:"fadl",
+    daleel:"﴿يَا أَيُّهَا الْإِنسَانُ مَا غَرَّكَ بِرَبِّكَ الْكَرِيمِ﴾", ref:"الانفطار: 6",
+    dua:"يا كَرِيمُ تَكَرَّمْ عَلَيَّ بِعَفْوِكَ وَلَا تُؤَاخِذْنِي بِجُرْمِي" },
+  { num:44, ar:"الرَّقِيب", en:"Ar-Raqeeb", meaning:"الذي يرقب ويراقب كل شيء ولا يغيب عنه شيء", theme:"ilm",
+    daleel:"﴿إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا﴾", ref:"النساء: 1",
+    dua:"اللَّهُمَّ اجْعَلْنِي مِمَّن يَسْتَحِي مِنْكَ حَقَّ الحَيَاء" },
+  { num:45, ar:"المُجِيب", en:"Al-Mujeeb", meaning:"الذي يستجيب دعاء عباده ويُجيب سائليه ومضطرّيهم", theme:"rahma",
+    daleel:"﴿إِنَّ رَبِّي قَرِيبٌ مُّجِيبٌ﴾", ref:"هود: 61",
+    dua:"اللَّهُمَّ إِنَّكَ مُجِيبُ الدَّعَوَاتِ فَاسْتَجِبْ دُعَائِي وَحَقِّقْ رَجَائِي" },
+  { num:46, ar:"الوَاسِع", en:"Al-Waasi'", meaning:"الذي وسعت رحمته كل شيء ولا يُعجزه شيء", theme:"rahma",
+    daleel:"﴿إِنَّ اللَّهَ وَاسِعٌ عَلِيمٌ﴾", ref:"البقرة: 115",
+    dua:"يا وَاسِعَ الرَّحْمَةِ وَسِّعْ عَلَيَّ رَحْمَتَكَ وَلَا تُضَيِّقْ عَلَيَّ رِزْقَك" },
+  { num:47, ar:"الحَكِيم", en:"Al-Hakeem", meaning:"الذي يضع كل شيء في موضعه اللائق به من حكمته البالغة", theme:"ilm",
+    daleel:"﴿وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾", ref:"التغابن: 18",
+    dua:"اللَّهُمَّ عَلِّمْنَا مَا يَنْفَعُنَا وَزِدْنَا عِلْمًا وَحِكْمَة" },
+  { num:48, ar:"الوَدُود", en:"Al-Wadood", meaning:"المحب لعباده الصالحين، الذي يودّ أولياءه ويحبّهم", theme:"rahma",
+    daleel:"﴿وَهُوَ الْغَفُورُ الْوَدُودُ﴾", ref:"البروج: 14",
+    dua:"اللَّهُمَّ إِنِّي أَسْأَلُكَ حُبَّكَ وَحُبَّ مَن يُحِبُّك" },
+  { num:49, ar:"المَجِيد", en:"Al-Majeed", meaning:"العظيم الشريف الكامل في صفاته وأفعاله وكرمه", theme:"jalal",
+    daleel:"﴿إِنَّهُ حَمِيدٌ مَّجِيدٌ﴾", ref:"هود: 73",
+    dua:"يا مَجِيدُ مَجِّدْنَا بِطَاعَتِكَ وَامْحُ عَنَّا كُلَّ مَعْصِيَة" },
+  { num:50, ar:"البَاعِث", en:"Al-Baa'ith", meaning:"الذي يبعث الموتى للحساب، ويبعث الرسل للهداية", theme:"jalal",
+    daleel:"﴿وَأَنَّ اللَّهَ يَبْعَثُ مَن فِي الْقُبُورِ﴾", ref:"الحج: 7",
+    dua:"اللَّهُمَّ ابْعَثْنَا يَوْمَ البَعْثِ فِي زُمْرَةِ أَنْبِيَائِكَ وَأَوْلِيَائِك" },
+  { num:51, ar:"الشَّهِيد", en:"Ash-Shaheed", meaning:"المطّلع على كل شيء يشهد الظاهر والباطن", theme:"ilm",
+    daleel:"﴿وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ شَهِيدٌ﴾", ref:"المجادلة: 6",
+    dua:"اللَّهُمَّ أَنْتَ الشَّهِيدُ عَلَى كُلِّ شَيءٍ فَاشْهَدْ أَنِّي أُحِبُّكَ" },
+  { num:52, ar:"الحَقّ", en:"Al-Haqq", meaning:"الثابت الوجود الذي لا يتغير، وكل شيء سواه باطل زائل", theme:"jalal",
+    daleel:"﴿فَذَٰلِكُمُ اللَّهُ رَبُّكُمُ الْحَقُّ﴾", ref:"يونس: 32",
+    dua:"اللَّهُمَّ أَرِنَا الحَقَّ حَقًّا وَارْزُقْنَا اتِّبَاعَهُ" },
+  { num:53, ar:"الوَكِيل", en:"Al-Wakeel", meaning:"الكافي لمن فوّض إليه أمره، يتولى أمور عباده أحسن توليّ", theme:"fadl",
+    daleel:"﴿وَتَوَكَّلْ عَلَى اللَّهِ وَكَفَىٰ بِاللَّهِ وَكِيلًا﴾", ref:"الأحزاب: 3",
+    dua:"حَسْبُنَا اللهُ وَنِعْمَ الوَكِيلُ" },
+  { num:54, ar:"القَوِيّ", en:"Al-Qawee", meaning:"التام القوة الذي لا يعجزه شيء ولا يُجارَى في قوته", theme:"quwa",
+    daleel:"﴿إِنَّ اللَّهَ قَوِيٌّ عَزِيزٌ﴾", ref:"الحج: 74",
+    dua:"يا قَوِيُّ قَوِّنِي بِقُوَّتِكَ عَلَى طَاعَتِكَ وَعَلَى عَدُوِّي" },
+  { num:55, ar:"المَتِين", en:"Al-Mateen", meaning:"الشديد القوة الذي لا تنقص قدرته ولا يلحقه تعب أو وهن", theme:"quwa",
+    daleel:"﴿إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ﴾", ref:"الذاريات: 58",
+    dua:"يا مَتِينُ أَمِتَّنِي عَلَى الإِسْلَامِ وَالإِيمَانِ وَالثَّبَاتِ" },
+  { num:56, ar:"الوَلِيّ", en:"Al-Waliyy", meaning:"وليّ المؤمنين ينصرهم ويتولّاهم ويحبّهم ويُحبّونه", theme:"rahma",
+    daleel:"﴿اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا﴾", ref:"البقرة: 257",
+    dua:"اللَّهُمَّ أَنْتَ وَلِيِّي فِي الدُّنْيَا وَالآخِرَةِ تَوَفَّنِي مُسْلِمًا" },
+  { num:57, ar:"الحَمِيد", en:"Al-Hameed", meaning:"المستحق لجميع المحامد والثناء في ذاته وصفاته وأفعاله", theme:"jamal",
+    daleel:"﴿إِنَّ اللَّهَ لَغَنِيٌّ حَمِيدٌ﴾", ref:"الحج: 64",
+    dua:"اللَّهُمَّ لَكَ الحَمْدُ كُلُّهُ وَلَكَ الشُّكْرُ كُلُّهُ" },
+  { num:58, ar:"المُحْصِي", en:"Al-Muhsee", meaning:"الذي أحصى كل شيء وعلمه ولا يفوته شيء في الوجود", theme:"ilm",
+    daleel:"﴿وَأَحَاطَ بِمَا لَدَيْهِمْ وَأَحْصَىٰ كُلَّ شَيْءٍ عَدَدًا﴾", ref:"الجن: 28",
+    dua:"يا مُحْصِيَ الأَعْمَالِ احْصِ لِي حَسَنَاتِي وَامْحُ عَنِّي سَيِّئَاتِي" },
+  { num:59, ar:"المُبْدِئ", en:"Al-Mubdi'", meaning:"الذي أوجد الخلق ابتداءً من العدم بلا مثال سبق", theme:"quwa",
+    daleel:"﴿إِنَّهُ هُوَ يُبْدِئُ وَيُعِيدُ﴾", ref:"البروج: 13",
+    dua:"يا مُبْدِئُ ابْدَأْ بِي نِعْمَةً وَاجْعَلْ خَاتِمَتِي خَيْرًا مِمَّا بَدَأْت" },
+  { num:60, ar:"المُعِيد", en:"Al-Mu'eed", meaning:"الذي يُعيد الخلق بعد فنائهم للحساب والجزاء", theme:"quwa",
+    daleel:"﴿إِنَّهُ هُوَ يُبْدِئُ وَيُعِيدُ﴾", ref:"البروج: 13",
+    dua:"يا مُعِيدُ أَعِدْ عَلَيَّ نِعَمَكَ وَلَا تَسْلُبْهَا مِنِّي بِمَعَاصِيَّ" },
+  { num:61, ar:"المُحْيِي", en:"Al-Muhyee", meaning:"الذي يُحيي الأموات والموات ويُحيي القلوب بنوره", theme:"quwa",
+    daleel:"﴿فَانظُرْ إِلَىٰ آثَارِ رَحْمَتِ اللَّهِ كَيْفَ يُحْيِي الْأَرْضَ بَعْدَ مَوْتِهَا﴾", ref:"الروم: 50",
+    dua:"يا مُحْيِيَ القُلُوبِ أَحْيِ قَلْبِي بِذِكْرِكَ وَمَحَبَّتِك" },
+  { num:62, ar:"المُمِيت", en:"Al-Mumeet", meaning:"الذي يُميت الأحياء بيده وحده ولا يُميت أحدٌ غيره", theme:"jalal",
+    daleel:"﴿الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ﴾", ref:"الملك: 2",
+    dua:"اللَّهُمَّ أَمِتْنَا مُسْلِمِينَ وَأَحْيِنَا مُسْلِمِين" },
+  { num:63, ar:"الحَيّ", en:"Al-Hayy", meaning:"الحي الدائم الأزلي الأبدي الذي لا يموت ولا تأخذه سِنة", theme:"jalal",
+    daleel:"﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ﴾", ref:"البقرة: 255",
+    dua:"يا حَيُّ يا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ" },
+  { num:64, ar:"القَيُّوم", en:"Al-Qayyoom", meaning:"القائم بنفسه القيّم على غيره، وجود الكون كله به قائم", theme:"jalal",
+    daleel:"﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ﴾", ref:"البقرة: 255",
+    dua:"يا حَيُّ يا قَيُّومُ لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ" },
+  { num:65, ar:"الوَاجِد", en:"Al-Waajid", meaning:"الغني الذي لا يفتقر إلى شيء ويجد كل ما يريد", theme:"fadl",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"ابن ماجه",
+    dua:"يا وَاجِدُ أَغْنِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَبِطَاعَتِكَ عَنْ مَعْصِيَتِك" },
+  { num:66, ar:"المَاجِد", en:"Al-Maajid", meaning:"الواسع الشرف والكرم والجود البالغ الكمال في مجده", theme:"jalal",
+    daleel:"﴿ذُو الْعَرْشِ الْمَجِيدُ﴾", ref:"البروج: 15",
+    dua:"يا مَاجِدُ اجْعَلْنِي مِنَ المُقَرَّبِينَ عِنْدَكَ يَوْمَ الدِّين" },
+  { num:67, ar:"الوَاحِد", en:"Al-Waahid", meaning:"المنفرد بذاته وصفاته، لا شريك له ولا مثيل", theme:"jalal",
+    daleel:"﴿قُلْ إِنَّمَا هُوَ إِلَٰهٌ وَاحِدٌ﴾", ref:"الأنعام: 19",
+    dua:"لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَه" },
+  { num:68, ar:"الأَحَد", en:"Al-Ahad", meaning:"المنفرد بالوحدانية التامة، لا يُؤخَذ إلا على انفراد", theme:"jalal",
+    daleel:"﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾", ref:"الإخلاص: 1",
+    dua:"قُلْ هُوَ اللهُ أَحَدٌ، اللهُ الصَّمَدُ (ثلاثًا) تعدل ثلث القرآن" },
+  { num:69, ar:"الصَّمَد", en:"As-Samad", meaning:"الذي يُقصد في الحاجات وتصمد إليه الخلائق في مطالبها", theme:"jalal",
+    daleel:"﴿اللَّهُ الصَّمَدُ﴾", ref:"الإخلاص: 2",
+    dua:"يا صَمَدُ أَنْتَ غِنَايَ فَلَا تَجْعَلْ لِأَحَدٍ عَلَيَّ فَضْلًا إِلَّا لَك" },
+  { num:70, ar:"القَادِر", en:"Al-Qaadir", meaning:"الذي يقدر على كل شيء ولا يعجزه شيء في السماوات والأرض", theme:"quwa",
+    daleel:"﴿إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ﴾", ref:"البقرة: 284",
+    dua:"اللَّهُمَّ مَا شِئْتَ كَانَ وَمَا لَمْ تَشَأْ لَمْ يَكُن، أَنْتَ القَادِرُ عَلَى كُلِّ شَيء" },
+  { num:71, ar:"المُقْتَدِر", en:"Al-Muqtadir", meaning:"الكامل القدرة، نافذ المشيئة في كل أمر", theme:"quwa",
+    daleel:"﴿عِندَ مَلِيكٍ مُّقْتَدِرٍ﴾", ref:"القمر: 55",
+    dua:"يا مُقْتَدِرُ لَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ" },
+  { num:72, ar:"المُقَدِّم", en:"Al-Muqaddim", meaning:"الذي يُقدّم ما شاء من خلقه وأمره رحمةً وحكمةً", theme:"ilm",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"البخاري",
+    dua:"اللَّهُمَّ قَدِّمْنِي إِلَيْكَ بِالأَعْمَالِ الصَّالِحَاتِ" },
+  { num:73, ar:"المُؤَخِّر", en:"Al-Mu'akhkhir", meaning:"الذي يُؤخّر من يشاء من أمر الخلق وأجلهم بحكمته", theme:"ilm",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"البخاري",
+    dua:"اللَّهُمَّ أَخِّرْ عَنِّي كُلَّ مَا يُبْعِدُنِي عَنْك" },
+  { num:74, ar:"الأَوَّل", en:"Al-Awwal", meaning:"السابق لكل شيء، الذي لا شيء قبله ولا ابتداء لوجوده", theme:"jalal",
+    daleel:"﴿هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ﴾", ref:"الحديد: 3",
+    dua:"أَنْتَ الأَوَّلُ فَلَيْسَ قَبْلَكَ شَيءٌ" },
+  { num:75, ar:"الآخِر", en:"Al-Aakhir", meaning:"الباقي بعد فناء كل شيء، لا نهاية لوجوده", theme:"jalal",
+    daleel:"﴿هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ﴾", ref:"الحديد: 3",
+    dua:"أَنْتَ الآخِرُ فَلَيْسَ بَعْدَكَ شَيء" },
+  { num:76, ar:"الظَّاهِر", en:"Adh-Dhaahir", meaning:"الظاهر بأدلة وجوده وآيات قدرته وعظمته في كل مكان", theme:"jamal",
+    daleel:"﴿هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ﴾", ref:"الحديد: 3",
+    dua:"اللَّهُمَّ أَظْهِرْ لِي وَجْهَكَ الكَرِيمَ فِي كُلِّ أَمْرِي" },
+  { num:77, ar:"البَاطِن", en:"Al-Baatin", meaning:"المحتجب عن الأبصار بعظمته، المطّلع على كل خافية", theme:"ilm",
+    daleel:"﴿هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ﴾", ref:"الحديد: 3",
+    dua:"يا بَاطِنُ أَصْلِحْ بَاطِنِي كَمَا أَصْلَحْتَ ظَاهِرِي" },
+  { num:78, ar:"الوَالِي", en:"Al-Waalee", meaning:"المتصرّف في الكون وحده، والي أمر الخلق أجمعين", theme:"jalal",
+    daleel:"﴿وَاللَّهُ وَلِيُّ الْأَمْرِ﴾", ref:"آل عمران: 128",
+    dua:"يا وَالِيَ الأُمُورِ وَلِّ أَمْرِي مَنْ يَصْلُحُنِي" },
+  { num:79, ar:"المُتَعَالِي", en:"Al-Muta'aali", meaning:"العالي فوق كل شيء بذاته وقدره، لا حدّ لعلوّه", theme:"jalal",
+    daleel:"﴿عَالِمُ الْغَيْبِ وَالشَّهَادَةِ الْكَبِيرُ الْمُتَعَالِ﴾", ref:"الرعد: 9",
+    dua:"سُبْحَانَكَ وَبِحَمْدِكَ تَعَالَيْتَ عَنْ كُلِّ نَقْصٍ وَعَيْب" },
+  { num:80, ar:"البَرّ", en:"Al-Barr", meaning:"الكثير الإحسان والبر بعباده، الواسع الخير والعطاء", theme:"rahma",
+    daleel:"﴿إِنَّهُ هُوَ الْبَرُّ الرَّحِيمُ﴾", ref:"الطور: 28",
+    dua:"اللَّهُمَّ أَنْتَ البَرُّ الرَّحِيمُ فَتُبْ عَلَيَّ وَارْحَمْنِي وَاغْفِرْ لِي" },
+  { num:81, ar:"التَّوَّاب", en:"At-Tawwaab", meaning:"الكثير القبول للتوبة، يقبل توبة عباده مرة بعد مرة", theme:"rahma",
+    daleel:"﴿إِنَّ اللَّهَ هُوَ التَّوَّابُ الرَّحِيمُ﴾", ref:"التوبة: 118",
+    dua:"اللَّهُمَّ تُبْ عَلَيَّ تَوْبَةَ نَصُوحًا لَا أَعُودُ بَعْدَهَا إِلَى مَعْصِيَتِك" },
+  { num:82, ar:"المُنْتَقِم", en:"Al-Muntaqim", meaning:"الشديد الانتقام ممن يستحق العقاب من الكافرين والظالمين", theme:"jalal",
+    daleel:"﴿إِنَّا مِنَ الْمُجْرِمِينَ مُنتَقِمُونَ﴾", ref:"السجدة: 22",
+    dua:"اللَّهُمَّ انْتَقِمْ لِي مِمَّن ظَلَمَنِي وَكُنْ لِي وَلَا تَكُنْ عَلَيَّ" },
+  { num:83, ar:"العَفُوّ", en:"Al-'Afuww", meaning:"الذي يمحو الذنوب ويتجاوز عن السيئات، كثير العفو", theme:"rahma",
+    daleel:"﴿وَكَانَ اللَّهُ عَفُوًّا غَفُورًا﴾", ref:"النساء: 43",
+    dua:"اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي" },
+  { num:84, ar:"الرَّؤُوف", en:"Ar-Ra'oof", meaning:"البالغ الرأفة، وهي أشد أنواع الرحمة وأرقّها", theme:"rahma",
+    daleel:"﴿إِنَّ اللَّهَ بِالنَّاسِ لَرَءُوفٌ رَّحِيمٌ﴾", ref:"البقرة: 143",
+    dua:"يا رَؤُوفُ ارْأَفْ بِي كَمَا رَأَفْتَ بِأَنْبِيَائِكَ وَأَوْلِيَائِك" },
+  { num:85, ar:"مَالِكُ المُلْك", en:"Maalik ul-Mulk", meaning:"الذي يملك الملك حقيقةً ويُعطيه من يشاء وينزعه ممن يشاء", theme:"jalal",
+    daleel:"﴿قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ﴾", ref:"آل عمران: 26",
+    dua:"اللَّهُمَّ مَالِكَ المُلْكِ آتِنِي مِنَ المُلْكِ مَا يُعِينُنِي عَلَى طَاعَتِك" },
+  { num:86, ar:"ذُو الجَلَالِ وَالإِكْرَام", en:"Dhul-Jalali wal-Ikram", meaning:"الجامع بين صفتي الجلال والإكرام، عظيم في ذاته كريم في عطائه", theme:"jalal",
+    daleel:"﴿تَبَارَكَ اسْمُ رَبِّكَ ذِي الْجَلَالِ وَالْإِكْرَامِ﴾", ref:"الرحمن: 78",
+    dua:"يا ذَا الجَلَالِ وَالإِكْرَامِ أَسْأَلُكَ أَنْ تُكْرِمَنِي بِرِضَاك" },
+  { num:87, ar:"المُقْسِط", en:"Al-Muqsit", meaning:"العادل في قضائه، يُقسط بين عباده ويوفّيهم حقوقهم", theme:"jamal",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"مسلم",
+    dua:"يا مُقْسِطُ اجْعَلْنِي مِنَ القِسَاطِ الَّذِينَ يَعْدِلُونَ" },
+  { num:88, ar:"الجَامِع", en:"Al-Jaami'", meaning:"الذي يجمع الخلائق يوم الحشر ويجمع بين المتفرقات", theme:"quwa",
+    daleel:"﴿رَبَّنَا إِنَّكَ جَامِعُ النَّاسِ لِيَوْمٍ لَّا رَيْبَ فِيهِ﴾", ref:"آل عمران: 9",
+    dua:"يا جَامِعُ اجْمَعْ شَمْلِي وَأَصْلِحْ أَمْرِي وَوَحِّدْ كَلِمَتِي" },
+  { num:89, ar:"الغَنِيّ", en:"Al-Ghanee", meaning:"الغني المطلق عن كل شيء، وكل شيء محتاج إليه", theme:"jalal",
+    daleel:"﴿وَاللَّهُ هُوَ الْغَنِيُّ الْحَمِيدُ﴾", ref:"فاطر: 15",
+    dua:"اللَّهُمَّ أَغْنِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَبِفَضْلِكَ عَمَّن سِوَاك" },
+  { num:90, ar:"المُغْنِي", en:"Al-Mughnee", meaning:"الذي يُغني من يشاء من فقر ويُوسّع له في الرزق", theme:"fadl",
+    daleel:"﴿وَأَنَّهُ هُوَ أَغْنَىٰ وَأَقْنَىٰ﴾", ref:"النجم: 48",
+    dua:"اللَّهُمَّ أَغْنِنِي بِعِلْمِكَ وَزَيِّنِّي بِحِلْمِكَ" },
+  { num:91, ar:"المَانِع", en:"Al-Maani'", meaning:"الذي يمنع من يشاء ويحجب عنه الأذى والمكاره", theme:"quwa",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"ابن ماجه",
+    dua:"اللَّهُمَّ امْنَعْنِي مِنَ الحَرَامِ وَاكْفِنِي مَا أَهَمَّنِي" },
+  { num:92, ar:"الضَّار", en:"Ad-Dhaarr", meaning:"الذي يقدر وحده على الإضرار بمن يشاء من عباده", theme:"jalal",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"الترمذي",
+    dua:"يا ضَارُّ يا نَافِعُ أَنْتَ الضَّارُّ النَّافِعُ لَا ضَارَّ وَلَا نَافِعَ سِوَاك" },
+  { num:93, ar:"النَّافِع", en:"An-Naafi'", meaning:"الذي يُنفع من يشاء بما يشاء من خيرات الدنيا والآخرة", theme:"fadl",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"الترمذي",
+    dua:"اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي وَعَلِّمْنِي مَا يَنْفَعُنِي" },
+  { num:94, ar:"النُّور", en:"An-Noor", meaning:"نور السماوات والأرض، بذكره تستنير القلوب والأرواح", theme:"jamal",
+    daleel:"﴿اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ﴾", ref:"النور: 35",
+    dua:"اللَّهُمَّ اجْعَلْ فِي قَلْبِي نُورًا، وَفِي بَصَرِي نُورًا، وَفِي سَمْعِي نُورًا" },
+  { num:95, ar:"الهَادِي", en:"Al-Haadee", meaning:"الذي يهدي خلقه ويُرشدهم إلى الخير والطريق المستقيم", theme:"rahma",
+    daleel:"﴿وَإِنَّكَ لَتَهْدِي إِلَىٰ صِرَاطٍ مُّسْتَقِيمٍ﴾", ref:"الشورى: 52",
+    dua:"اللَّهُمَّ اهْدِنِي وَسَدِّدْنِي، وَاذْكُرْ بِالهُدَى هِدَايَةَ الطَّرِيق" },
+  { num:96, ar:"البَدِيع", en:"Al-Badee'", meaning:"مُبدع الخلق وموجده على غير مثال سبق بديع الصنع", theme:"jamal",
+    daleel:"﴿بَدِيعُ السَّمَاوَاتِ وَالْأَرْضِ﴾", ref:"البقرة: 117",
+    dua:"يا بَدِيعَ السَّمَاوَاتِ وَالأَرْضِ يَا ذَا الجَلَالِ وَالإِكْرَامِ" },
+  { num:97, ar:"البَاقِي", en:"Al-Baaqi", meaning:"الدائم الباقي الذي لا يفنى ولا ينقطع وجوده أبدًا", theme:"jalal",
+    daleel:"﴿وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ﴾", ref:"الرحمن: 27",
+    dua:"يا بَاقِي أَبْقِ إِيمَانِي وَأَبْقِ عَلَيَّ رَحْمَتَكَ إِلَى يَوْمِ الدِّين" },
+  { num:98, ar:"الوَارِث", en:"Al-Waarith", meaning:"الذي يبقى بعد فناء خلقه وترجع إليه جميع الأملاك", theme:"jalal",
+    daleel:"﴿وَإِنَّا لَنَحْنُ نُحْيِي وَنُمِيتُ وَنَحْنُ الْوَارِثُونَ﴾", ref:"الحجر: 23",
+    dua:"يا وَارِثُ أَوْرِثْنِي جَنَّتَكَ وَلَا تُورِثْنِي نَارَك" },
+  { num:99, ar:"الصَّبُور", en:"As-Saboor", meaning:"الذي لا يُعاجل بالعقوبة مع كمال علمه بذنوب عباده", theme:"rahma",
+    daleel:"من أسمائه الثابتة في السنة النبوية", ref:"ابن ماجه",
+    dua:"يا صَبُورُ أَعِنِّي عَلَى الصَّبْرِ وَلَا تُؤَاخِذْنِي بِعَجَلَتِي" }
+];
+
+const themeLabels = {
+  rahma: { label: 'الرحمة والعطاء', cls: 'theme-rahma' },
+  jalal: { label: 'الجلال والعظمة', cls: 'theme-jalal' },
+  jamal: { label: 'الجمال والكمال', cls: 'theme-jamal' },
+  fadl:  { label: 'الفضل والكرم',  cls: 'theme-fadl'  },
+  ilm:   { label: 'العلم والحكمة', cls: 'theme-ilm'   },
+  quwa:  { label: 'القوة والقدرة', cls: 'theme-quwa'  }
+};
+
+let currentFilter = 'all';
+let expandedCard = null;
+
+function renderCards(data) {
+  const grid = document.getElementById('grid');
+  document.getElementById('count-num').textContent = data.length;
+  if (!data.length) {
+    grid.innerHTML = '<div class="empty"><span class="empty-ar">لم يُوجَد</span>لا توجد نتائج مطابقة</div>';
+    return;
+  }
+  grid.innerHTML = data.map(n => {
+    const t = themeLabels[n.theme];
+    return `
+    <div class="card" id="card-${n.num}" onclick="toggleCard(${n.num})">
+      <span class="card-num">${n.num}</span>
+      <div class="card-top">
+        <span class="name-ar">${n.ar}</span>
+        <span class="name-en">${n.en}</span>
+        <p class="meaning">${n.meaning}</p>
+        <span class="theme-tag ${t.cls}">${t.label}</span>
+      </div>
+      <div class="card-detail" id="detail-${n.num}">
+        <div class="detail-section">
+          <div class="detail-label">الدليل من القرآن والسنة</div>
+          <div class="detail-text">${n.daleel}<span class="ref">${n.ref}</span></div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">الدعاء المرتبط</div>
+          <div class="detail-text dua">${n.dua}</div>
+        </div>
+      </div>
+      <div class="toggle-icon" id="icon-${n.num}">▼</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(num) {
+  const card = document.getElementById('card-' + num);
+  const isExpanded = card.classList.contains('expanded');
+  if (expandedCard && expandedCard !== num) {
+    document.getElementById('card-' + expandedCard).classList.remove('expanded');
+  }
+  card.classList.toggle('expanded', !isExpanded);
+  expandedCard = isExpanded ? null : num;
+}
+
+function setFilter(theme, btn) {
+  currentFilter = theme;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  expandedCard = null;
+  applyFilters();
+}
+
+function filterCards() { expandedCard = null; applyFilters(); }
+
+function applyFilters() {
+  const q = document.getElementById('search').value.trim();
+  let data = names;
+  if (currentFilter !== 'all') data = data.filter(n => n.theme === currentFilter);
+  if (q) {
+    const ql = q.toLowerCase();
+    data = data.filter(n =>
+      n.ar.includes(q) ||
+      n.en.toLowerCase().includes(ql) ||
+      n.meaning.includes(q) ||
+      n.daleel.includes(q)
+    );
+  }
+  renderCards(data);
+}
+
+renderCards(names);
+</script>
+</body>
+</html>
